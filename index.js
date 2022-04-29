@@ -17,7 +17,7 @@ mongoose
   })
   .then(() => {
     Recipe.create(data)
-      .then(recipe => console.log (Recipe.find({}, 'title')))
+      .then(recipes => recipes.forEach(recipe => console.log(recipe.title)))
       .catch(error => console.log ('An error happened while saving a new user: ', error));
     })
   .catch(error => {

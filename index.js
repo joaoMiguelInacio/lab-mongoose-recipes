@@ -5,7 +5,7 @@ const Recipe = require('./models/Recipe.model');
 // Import of the data from './data.json'
 const data = require('./data');
 
-const MONGODB_URI = 'mongodb://localhost:27017/recipe-app';
+const MONGODB_URI = 'mongodb://localhost/recipe-app';
 
 const data1 = {
   "title": "Fried egg",
@@ -17,8 +17,6 @@ const data1 = {
   "duration": 3,
   "creator": "Chef Homo Erectus"
 };
-
-//Fully working Async/Await
 
 async function myRecipeApp () {
   try {
@@ -50,6 +48,7 @@ async function myRecipeApp () {
 myRecipeApp ();
 
 /*
+
 Fully working - Callback Hell
 
 mongoose.connect(MONGODB_URI)
@@ -86,10 +85,7 @@ mongoose.connect(MONGODB_URI)
 
 _________________________________________________________________________________________________________________________
 
-NOT WORKING - Chaining 
-
-  The first console.log is executed "Connected to the database: 'recipe-app'" but this is followed by:
-  "This error has happened: MongoNotConnectedError: MongoClient must be connected to perform this operation"
+Fully working - Chaining 
 
 mongoose.connect(MONGODB_URI)
   .then(x => {
@@ -110,12 +106,13 @@ mongoose.connect(MONGODB_URI)
   })        
   .then (updatedRecipe => {
     console.log(`Iteration 4: ${updatedRecipe.title} cooking time has been updated to ${updatedRecipe.duration} minutes`);
-    return Recipe.deleteOne({ title : "Carrot Cake" })
+    return Recipe.deleteOne({ title : "Carrot Cake" });
   })         
   .then(finish => {
     console.log(`Iteration 5: I am sorry but Carrot Cake is no longer available.`);
+    return mongoose.connection.close();
   })
-  .then (mongoose.connection.close(() => {   
+  .then (() => {   
       console.log('Iteration 6: Mongoose default connection disconnected through app termination');
       return process.exit(0);
   }))
@@ -123,4 +120,4 @@ mongoose.connect(MONGODB_URI)
     console.error('This error has happened:', error);
   });
 
-*/
+  */
